@@ -1,0 +1,74 @@
+
+#pea-launch {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 999999;
+  background: #176b48;
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px #0003;
+}
+
+#pea-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 82px;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  max-height: 70vh;
+  overflow-y: auto;
+  z-index: 999999;
+  background: white;
+  color: #202124;
+  border: 1px solid #dadce0;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 8px 32px #0003;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+#pea-panel[hidden] {
+  display: none;
+}
+
+#pea-panel .pea-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+#pea-close {
+  border: 0;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+#pea-panel .pea-score {
+  font-size: 32px;
+  font-weight: 800;
+  margin-top: 16px;
+}
+
+#pea-panel .pea-level {
+  font-weight: 700;
+  margin: 8px 0;
+}
+
+#pea-panel .pea-note {
+  color: #5f6368;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+#pea-panel li {
+  margin-bottom: 8px;
+}
