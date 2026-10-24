@@ -16,6 +16,7 @@
 
   // Circumference of the gauge circle (radius 84): 2 * PI * r
   var GAUGE_CIRCUMFERENCE = 2 * Math.PI * 84;
+   var lastAnalysis = null;
 
   /* ---------------------------------------------------------------- */
   /*  Tiny DOM helpers                                                 */
@@ -241,6 +242,7 @@
   }
 
   function renderResult(result) {
+     lastAnalysis = result;
     els.emptyState.hidden = true;
     els.resultsContent.hidden = false;
 
@@ -320,6 +322,47 @@
   /* ---------------------------------------------------------------- */
   /*  Start up                                                         */
   /* ---------------------------------------------------------------- */
+   
+function exportAnalysisReport() {
+  if (!lastAnalysis) {
+    alert("Analyse an email first.");
+    return;
+  }
+
+  var r = lastAnalysis;
+  var lines = [
+    "PHISHING EMAIL ANALYSIS REPORT",
+    "Generated: " + new Date().toLocaleString(),
+    "Risk score: " + r.score + "/100",
+    "Classification: " + r.levelLabel,
+    "",
+    "WARNING SIGNS"
+  ];
+
+  r.hits.forEach(function (hit) {
+    lines.push(
+      "- " + hit.label + " (+" + hit.weight + " points)",
+      "Reason: " + hit.explain,
+      "Advice: " + hit.advice,
+      ""
+    );
+  });
+
+  lines.push(
+    "Note: Educational assessment, not a definitive verdict."
+  );
+
+  var blob = new Blob([lines.join("\n")], {
+    type: "text/plain;charset=utf-8"
+  });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "phishing-analysis-report.txt";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
   function init() {
     originalEmptyHtml = els.emptyState.innerHTML;
     buildSampleButtons();
@@ -328,6 +371,8 @@
     els.input.addEventListener("input", updateInputMeta);
     els.analyseBtn.addEventListener("click", runAnalysis);
     els.clearBtn.addEventListener("click", clearAll);
+     document.getElementById("exportReportBtn")
+  .addEventListener("click", exportAnalysisReport);
 
     // Ctrl/Cmd + Enter runs the analysis from inside the text area.
     els.input.addEventListener("keydown", function (e) {
