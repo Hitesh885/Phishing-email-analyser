@@ -1,0 +1,16 @@
+
+{
+  "manifest_version": 3,
+  "name": "Phishing Email Analyzer",
+  "version": "1.0.0",
+  "description": "Analyze the currently opened Gmail message for common phishing indicators.",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["extension/analyzer.js", "extension/content.js"],
+      "css": ["extension/styles.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
